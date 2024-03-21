@@ -141,6 +141,32 @@ podman run -dt -p 8000:3000 api
 
 - `podman stats` ใช้เพื่อดูสถิติการใช้ทรัพยากรณ์ของเครื่อง แต่ต้อง `podman machine set --rootful` ไม่งั้นสิทธิ์จะไม่ถึง
 
+# ลบ Container ได้ด้วยคำสั่ง
+
+```
+podman container stop <ID>
+podman container rm <ID>
+```
+
+# รัน Container แบบจำกัด Memory
+
+```
+podman run -dt -p 8000:3000 --name=api-test -m 256m -memory-swap 256m api
+```
+
+# คำสั่งดู Container ทั้งหมด
+
+```
+podman ps
+podman ps -a
+```
+
+# คำสั่งดู Image ทั้งหมด
+
+```
+podman images
+```
+
 ## วิธีถอนการติดตั้ง machine
 
 - https://github.com/containers/podman/issues/17395
