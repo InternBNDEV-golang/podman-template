@@ -199,6 +199,14 @@ podman images
 ## วิธีถอนการติดตั้ง machine
 
 - https://github.com/containers/podman/issues/17395
+- ใช้คำสั่ง
+
+```
+winget uninstall podman
+podman system connection remove podman-machine-default
+podman system connection remove podman-machine-default-root
+```
+
 - ลบโฟลเดอร์พวกนี้
 
 ```
