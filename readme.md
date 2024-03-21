@@ -62,6 +62,8 @@ memory=1GB
 processors=1
 ```
 
+- หรือโหลดได้ที่ไฟล์ [`.wslconfig`](https://github.com/InternBNDEV-golang/podman-template/blob/master/.wslconfig)
+
 - จากนั้น restart wsl
 
 ```
@@ -70,12 +72,39 @@ wsl --shutdown
 
 ![alt text](Image/4image.png)
 
-- แล้วทำการ `podman machine start` ใหม่จากนั้นก็ได้ `podman machine ssh` ทำการเช็คแรมได้เลย `free -h --giga`
+- แล้วทำการ
+
+```
+podman machine start
+```
+
+- ใหม่จากนั้นก็ได้
+
+```
+podman machine ssh
+```
+
+- ทำการเช็คแรมได้เลย
+
+```
+free -h --giga
+```
 
 ## ย้าย เครื่องจำลอง ไปที่ไดร์อื่น กรณี drive C จะเต็ม
 
-- หยุด podman VM ของคุณ `podman machine stop` และ `wsl --shutdown`
-- จากนั้นไปที่โฟลเดอร์นี้แล้วคัดลอก podman-machine-default มา
+- หยุด podman VM ของคุณ
+
+```
+podman machine stop
+```
+
+- และ
+
+```
+wsl --shutdown
+```
+
+- จากนั้นไปที่โฟลเดอร์นี้แล้วคัดลอก `podman-machine-default` มาที่ตำแหน่ง
 
 ```
 %USERPROFILE%\.local\share\containers\podman\machine\wsl\wsldist\
