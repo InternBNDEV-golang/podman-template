@@ -170,6 +170,41 @@ podman run -dt -p 8000:3000 api
 
 - `podman stats` ใช้เพื่อดูสถิติการใช้ทรัพยากรณ์ของเครื่อง แต่ต้อง `podman machine set --rootful` ไม่งั้นสิทธิ์จะไม่ถึง
 
+## สำหรับ Golang หาก build นาน
+
+- ทำการติดตั้งโมดูลก่อนนึงรอบด้วยคำสั่ง
+```
+go mod vendor
+```
+
+- จากนั้นเปลี่ยน Dockerfile เป็นแบบนี้
+```Dockerfile
+FROM golang:1.22-alpine3.20 as builder
+
+RUN apk update && apk add --no-cache ca-certificates
+
+WORKDIR /app
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /main .
+
+FROM scratch
+WORKDIR /
+COPY --from=builder /main /main
+ENTRYPOINT ["/main"]
+```
+- รัน podman (อย่าลืมปิด load env ใน main.go ด้วย)
+```
+podman build -t api .
+podman run -it -p 8000:3000 api
+```
+
+- หากต้องใช้ env ในเครื่อง local เนื่องจากเราไม่ได้ set ไว้สามารถใช้คำสั่งนี้รันได้
+```
+podman build -t api .
+podman run -it -p 1818:1818 --env-file .env api
+```
+
 # ลบ Container ได้ด้วยคำสั่ง
 
 ```
